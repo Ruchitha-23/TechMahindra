@@ -1,0 +1,56 @@
+<div class="task-list-container">
+  <div class="task-header">
+    <h1>My Tasks</h1>
+    <button class="btn btn-primary" (click)="onAddTask()">Add New Task</button>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="task-form" *ngIf="showForm">
+    <app-task-form
+      [task]="selectedTask"
+      (submitTask)="onSubmitTask($event)"
+      (cancelEdit)="onCancelEdit()"
+    ></app-task-form>
+  </div>
+
+  <div class="task-grid" *ngIf="tasks.length > 0; else noTasks">
+    <div class="task-card" *ngFor="let task of tasks">
+      <div class="task-header">
+        <h3>{{ task.title }}</h3>
+        <div class="task-actions">
+          <button class="btn btn-icon" (click)="onEditTask(task)" title="Edit task">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn btn-icon" (click)="onDeleteTask(task.id)" title="Delete task">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <p class="task-description">{{ task.description }}</p>
+      <div class="task-meta">
+        <span class="task-date">
+          <i class="fas fa-calendar"></i>
+          {{ task.dueDate | date:'mediumDate' }}
+        </span>
+        <span class="task-priority" [ngClass]="getPriorityClass(task.priority)">
+          <i class="fas fa-flag"></i>
+          {{ task.priority | titlecase }}
+        </span>
+        <span class="task-status" [ngClass]="getStatusClass(task.status)">
+          <i class="fas fa-circle"></i>
+          {{ task.status | titlecase }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noTasks>
+    <div class="no-tasks">
+      <i class="fas fa-tasks"></i>
+      <p>No tasks found. Click "Add New Task" to create one!</p>
+    </div>
+  </ng-template>
+</div>

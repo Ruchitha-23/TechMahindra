@@ -1,0 +1,102 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h1>{{ showSignup ? 'Sign Up' : 'Login' }}</h1>
+    
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" *ngIf="!showSignup">
+      <div class="form-group">
+        <label for="loginEmail">Email</label>
+        <input
+          type="email"
+          id="loginEmail"
+          formControlName="email"
+          class="form-control"
+          placeholder="Enter your email"
+          [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+        >
+        <div class="invalid-feedback" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          Please enter a valid email address
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input
+          type="password"
+          id="loginPassword"
+          formControlName="password"
+          class="form-control"
+          placeholder="Enter your password"
+          [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        >
+        <div class="invalid-feedback" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          Password must be at least 6 characters long
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+        Login
+      </button>
+    </form>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSignup()" *ngIf="showSignup">
+      <div class="form-group">
+        <label for="signupName">Name</label>
+        <input
+          type="text"
+          id="signupName"
+          formControlName="name"
+          class="form-control"
+          placeholder="Enter your name"
+          [class.is-invalid]="signupForm.get('name')?.invalid && signupForm.get('name')?.touched"
+        >
+        <div class="invalid-feedback" *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched">
+          Name must be at least 3 characters long
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="signupEmail">Email</label>
+        <input
+          type="email"
+          id="signupEmail"
+          formControlName="email"
+          class="form-control"
+          placeholder="Enter your email"
+          [class.is-invalid]="signupForm.get('email')?.invalid && signupForm.get('email')?.touched"
+        >
+        <div class="invalid-feedback" *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+          Please enter a valid email address
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="signupPassword">Password</label>
+        <input
+          type="password"
+          id="signupPassword"
+          formControlName="password"
+          class="form-control"
+          placeholder="Enter your password"
+          [class.is-invalid]="signupForm.get('password')?.invalid && signupForm.get('password')?.touched"
+        >
+        <div class="invalid-feedback" *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+          Password must be at least 6 characters long
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">
+        Sign Up
+      </button>
+    </form>
+
+    <div class="auth-switch">
+      <button class="btn btn-link" (click)="toggleSignup()">
+        {{ showSignup ? 'Already have an account? Login' : "Don't have an account? Sign Up" }}
+      </button>
+    </div>
+  </div>
+</div> 
